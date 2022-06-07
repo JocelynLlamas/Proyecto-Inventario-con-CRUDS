@@ -9,11 +9,11 @@ class logcategorias extends Model
 {
     use HasFactory;
 
-    protected $table="logarticulos";
+    protected $table="--";
 
     protected $fillable=[
         'idcategoria',
         'nombreCategoriaO',
-        'nombreCategoriaN',
+        'nombreCategoriaN'
     ];
 }

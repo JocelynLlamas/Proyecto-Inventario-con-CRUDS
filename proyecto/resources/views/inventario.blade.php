@@ -76,7 +76,7 @@
                             <h5 class="modal-title" id="exampleModalLabel">Edición del artículo</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="/guardaedicion" method="POST">
+                        <form action="/guardaedicion" method="POST" enctype="multipart/form-data">
                             <div class="modal-body">
 
                                 @csrf
@@ -169,22 +169,20 @@
                 </div>
             </div>
             <!-- /PDF -->
-            <!-- IMPORTAR .CSV -->
-            <!-- <div class="card" style="width: 30%; margin-left: auto; margin-right: auto;">
+            <!-- EXPORTAR .CSV -->
+            <div class="card" style="width: 30%; margin-left: auto; margin-right: auto;">
                 <div class="card-body" style="text-align: center;">
-                    <h5 class="card-title">Importar un .csv</h5> -->
-            <!-- FORMULARIO-->
-            <!-- <div class="row">
-                        <form action="/import" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <input type="file" name="file" accept=".csv" class="form-control">
-                            <input type="submit" class="btn btn-primary" value="Importar">
-                        </form>
-                    </div> -->
-            <!-- /FORMULARIO -->
-            <!-- </div>
-            </div> -->
-            <!-- /IMPORTAR .CSV -->
+                    <h5 class="card-title">Exportar información de inventario a un .csv</h5>
+                    <!-- FORMULARIO-->
+                    <div class="row">
+                        <a class="btn btn-primary" href="{{route('post.export')}}">
+                            Exportar
+                        </a>
+                    </div>
+                    <!-- /FORMULARIO -->
+                </div>
+            </div>
+            <!-- /EXPORTAR .CSV -->
         </div>
     </div>
 </x-app-layout>

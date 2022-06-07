@@ -50,19 +50,15 @@ Route::middleware([
     Route::get('/categorias', [CategoriasController::class, 'categoriaExistente'])->name('categorias');
     Route::post('/crearCategoria', [CategoriasController::class, 'guardar']);
 
-    Route::get('/eliminar/{id}', [CategoriasController::class, 'eliminar']);
-    Route::get('/editar/{id}', [CategoriasController::class, 'muestraeditar']);
+    Route::get('/eliminarCat/{id}', [CategoriasController::class, 'eliminar']);
+    Route::get('/editarCat/{id}', [CategoriasController::class, 'muestraeditar']);
 
-    Route::post('/guardaedicion', [CategoriasController::class, 'guardarEdicion']);
+    Route::post('/guardaedicionCat', [CategoriasController::class, 'guardarEdicion']);
     Route::post('/articuloPorCategoria/{id}', [CategoriasController::class, 'categoriaObtenida']);
 
     // PDF
     Route::post('/descargaPdf', [ArticuloController::class, 'descargaPdf']);
 
     //.CSV
-    //Route::post('/import', function () {
-    //    Excel::import(new ArticulosImport, request()->file('file'));
-    //    return redirect()->back()->with('success','Data Imported Successfully');
-    //});
-    Route::post('/import', [CategoriasController::class, 'importCsv']);
+    Route::get('/inventario/export', [ArticuloController::class, 'exportCsv'])->name('post.export');
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PostsExport;
 use Illuminate\Http\Request;
 use App\Models\Articulos;
 use App\Models\logarticulos;
@@ -13,13 +14,6 @@ use App\Imports\ArticulosImport;
 class ArticuloController extends Controller
 {
     // ARTICULOS 
-
-    // public function registro()
-    // {
-    //     $articulos = Articulos::where('precio', '>', 0)->get();
-    //     $categorias = Categorias::all();
-    //     return view('inventario', ['Articulos'=>$articulos])->with('categorias',$categorias);
-    // }
 
     public function articuloExistente()
     {
@@ -71,40 +65,49 @@ class ArticuloController extends Controller
     public function muestraeditar($id)
     {
         $articulo = Articulos::find($id);
-
-        return view('editar')->with('articulo', $articulo);
+        $categorias = Categorias::all();
+        return view('editar')->with('articulo', $articulo)->with('categorias', $categorias);
     }
 
     public function guardarEdicion(Request $request)
     {
-        $articulo = Articulos::find($request->id);
+        $articulo = Articulos::find((int)$request->id);
+
+        if ($request->foto == NULL) {
+            $imagen = $articulo->image_path;
+            $request->image_path = $imagen;
+        } else {
+            $imagen =  $request->nombre . '.' . $request->foto->extension();
+            $request->foto->move(public_path('images'), $imagen);
+        }
 
         $log = new logarticulos();
         $log->idarticulo = $articulo->id;
 
         $log->nombreO = $articulo->nombre;
         $log->piezasO = $articulo->piezas;
-        $log->precioO = $articulo->precio;
+        $log->precioO = (int)$articulo->precio;
         $log->categoria_idO = $articulo->categoria_id;
         $log->descripcionO = $articulo->descripcion;
         $log->image_pathO = $articulo->image_path;
+
         $log->nombreN = $request->nombre;
         $log->piezasN = $articulo->piezas;
-        $log->precioN = $articulo->precio;
+        $log->precioN = (int)$articulo->precio;
         $log->categoria_idN = $articulo->categoria_id;
         $log->descripcionN = $articulo->descripcion;
         $log->image_pathN = $articulo->image_path;
-
+        $log->save();
 
         $articulo->nombre = $request->nombre;
         $articulo->piezas = $request->piezas;
-        $articulo->precio = $request->precio;
+        $articulo->precio = (int)$request->precio;
         $articulo->categoria_id = $request->categoria_id;
         $articulo->descripcion = $request->descripcion;
         $articulo->image_path = $request->image_path;
         $articulo->save();
 
-        $log->save();
+       
         return redirect('/inventario');
     }
 
@@ -121,16 +124,12 @@ class ArticuloController extends Controller
 
     public function importCsv()
     {
-        $fileName = time() . '_' . request()->file->getClientOriginalName();
-        request()->file('file')->storeAs('reports', $fileName, 'public');
-
         Excel::import(new ArticulosImport, request()->file('file'));
         return redirect()->back()->with('success', 'Data Imported Successfully');
     }
 
-    // public function exportCsv()
-    // {
-    //     $export = Excel::download(new ArticulosExport, 'articulos.csv');
-    //     return $export;
-    // }
+    public function exportCsv()
+    {
+        return Excel::download(new PostsExport, 'inventario.xlsx');
+    }
 }

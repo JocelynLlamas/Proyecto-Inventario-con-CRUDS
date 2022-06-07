@@ -18,6 +18,7 @@ class Articulos extends Model
         'piezas',
         'precio',
         'categoria_id',
+        'descripcion',
         'image_path'
     ];
 

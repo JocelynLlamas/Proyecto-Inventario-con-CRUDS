@@ -28,9 +28,9 @@ class ArticulosImport implements ToModel, WithStartRow, WithCustomCsvSettings
     public function model(array $row)
     {
         return new Articulos([
-            'nombre'=> $row['nombre'],
-            'piezas' => $row['piezas'],
-            'precio' => $row['precio'],
+            'nombre'=> $row[0],
+            'piezas' => $row[1],
+            'precio' => $row[2],
         ]);
     }
 }

@@ -42,7 +42,7 @@
                             <h5 class="modal-title" id="exampleModalLabel">Edición de la categoría</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="/guardaedicion" method="POST">
+                        <form action="/guardaedicionCat" method="POST">
                             <div class="modal-body">
 
                                 @csrf
@@ -74,7 +74,7 @@
                     @foreach($categorias as $categoria)
                     <tr>
                         <td><a href="/articuloPorCategoria/{{$categoria->id}}">{{$categoria->nombreCategoria}}</a></td>
-                        <td><a href="/eliminar/{{$categoria->id}}">Eliminar</a></td>
+                        <td><a href="/eliminarCat/{{$categoria->id}}">Eliminar</a></td>
                         <td>
                             <!-- Button trigger modal -->
                             <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">

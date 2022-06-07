@@ -18,10 +18,10 @@ class TablaArticulos extends Migration
             $table->string('nombre', 100);
             $table->integer('piezas');
             $table->double('precio');
-            $table->foreignId('categoria_id')
-                    ->constrained()
+            $table->foreignId('categoria_id')->nullable();
+            $table->foreign('categoria_id')->references('id')->on('categorias')
                     ->onUpdate('cascade')
-                    ->onDelete('cascade');
+                    ->onDelete('set null');
             $table->string('descripcion', 200);
             $table->string('image_path')->nullable();
             $table->softDeletes();

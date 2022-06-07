@@ -22,10 +22,12 @@ class CategoriasController extends Controller
         $categoria->nombreCategoria = $request->nombreCategoria;
         $categoria->save();
 
-        $log = new logcategorias();
-        $log->idcategoria = $categoria->id;
-        $log->nombreCategoriaN = $categoria->nombreCategoria;
-        $log->save();
+        // dd($categoria);
+
+        // $log = new logcategorias();
+        // $log->idcategoria = $categoria->id;
+        // $log->nombreCategoriaN = $categoria->nombreCategoria;
+        // $log->save();
 
 
         return redirect()->back();
@@ -34,7 +36,7 @@ class CategoriasController extends Controller
     public function eliminar($id)
     {
         $categoria = Categorias::find($id);
-        $categoria->forceDelete();
+        $categoria->delete();
         return redirect()->back();
     }
 
@@ -54,11 +56,12 @@ class CategoriasController extends Controller
 
         $log->nombreCategoriaO = $categoria->nombreCategoria;
         $log->nombreCategoriaN = $request->nombreCategoria;
+        $log->save();
 
         $categoria->nombreCategoria = $request->nombreCategoria;
         $categoria->save();
 
-        $log->save();
+        
         return redirect('/categorias');
     }
 
